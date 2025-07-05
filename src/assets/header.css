@@ -1,0 +1,12 @@
+.custom-menu-item-active {
+    color: #d2691e !important;
+    border-bottom-color: #d2691e !important;
+}
+:where(.ant-menu-light.ant-menu-horizontal) > .ant-menu-item-selected.custom-menu-btn-active::after{
+    display: none !important;
+}
+.custom-button{
+    border-radius: 0;
+    font-weight: bold;
+    padding: 20px 15px;
+}
