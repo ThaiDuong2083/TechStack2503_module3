@@ -8,6 +8,8 @@ const PathVariable = Object.freeze({
     SETTING_ADDRESS: '/user-profile/setting-address',
     COUPON: '/user-profile/coupons',
     LOGOUT: '/logout',
+    SIGN_IN: '/sign-in',
+    SIGN_UP: '/sign-up',
 });
 
 export default PathVariable;

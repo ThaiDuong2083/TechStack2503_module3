@@ -7,6 +7,8 @@ import OrderPage from "./pages/OrderPage.jsx";
 import HomePage from "./pages/HomePage.jsx";
 import {ConfigProvider} from "antd";
 import PathVariable from "./enum.jsx";
+import SignUpForm from "./components/SignUpForm.jsx";
+import SignInForm from "./components/SignInForm.jsx";
 
 function App() {
     const routes = useRoutes([
@@ -19,6 +21,8 @@ function App() {
                 {path: PathVariable.ABOUT_ME, element: <AboutMePage/>},
                 {path: PathVariable.NEWS, element: <NewsPage/>},
                 {path: PathVariable.ORDER, element: <OrderPage/>},
+                {path: PathVariable.SIGN_UP, element: <SignUpForm/>},
+                {path: PathVariable.SIGN_IN, element: <SignInForm/>},
             ],
         },
         { path: "*", element: <h1>404 Not Found</h1> },

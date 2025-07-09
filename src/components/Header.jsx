@@ -53,42 +53,46 @@ const HeaderLayout = () => {
     const location = useLocation();
     const navigate = useNavigate();
 
-    return (<Header className={"fixed !bg-white flex w-screen !px-28 justify-between top-0"}>
-        <div className={"header-left"}>
-            <Menu
-                selectedKeys={[location.pathname]}
-                onClick={({key}) => navigate(key)}
-                mode="horizontal"
-            >
-                {menuItems.map(item => (<Menu.Item
-                    key={item.key}
-                    className={`${location.pathname === item.key && item.key !== PathVariable.ORDER ? "custom-menu-item-active" : ""} ${location.pathname === item.key && item.key === PathVariable.ORDER ? "custom-menu-btn-active" : ""}`}
-                >
-                    {item.key === PathVariable.ORDER ? (<Button type="primary" className="custom-button">
-                        {item.label}
-                    </Button>) : (<span className="font-bold">{item.label}</span>)}
-                </Menu.Item>))}
-            </Menu>
+    return (
+        <div className="h-18 z-50 fixed top-0 w-screen bg-white">
+            <Header className={"w-11/12 flex justify-between m-auto !bg-white"}>
+                <div className={"header-left"}>
+                    <Menu
+                        selectedKeys={[location.pathname]}
+                        onClick={({key}) => navigate(key)}
+                        mode="horizontal"
+                    >
+                        {menuItems.map(item => (<Menu.Item
+                            key={item.key}
+                            className={`${location.pathname === item.key && item.key !== PathVariable.ORDER ? "custom-menu-item-active" : ""} ${location.pathname === item.key && item.key === PathVariable.ORDER ? "custom-menu-btn-active" : ""}`}
+                        >
+                            {item.key === PathVariable.ORDER ? (<Button type="primary" className="custom-button">
+                                {item.label}
+                            </Button>) : (<span className="font-bold">{item.label}</span>)}
+                        </Menu.Item>))}
+                    </Menu>
+                </div>
+                <div className={"header-right flex items-center gap-5"}>
+                    <div className={"flex items-center"}>
+                        <Search placeholder="Tìm kiếm món ăn"  style={{width: 200}}/>
+                    </div>
+                    <div>
+                        <Dropdown menu={{items}}>
+                            <a onClick={e => e.preventDefault()}>
+                                <Space className={"text-black"}>
+                                    <UserOutlined />
+                                    Tài khoản
+                                </Space>
+                            </a>
+                        </Dropdown>
+                    </div>
+                    <div>
+                        <ShoppingCartOutlined className={"text-2xl"} />
+                    </div>
+                </div>
+            </Header>
         </div>
-        <div className={"header-right flex items-center gap-5"}>
-            <div className={"flex items-center"}>
-                <Search placeholder="Tìm kiếm món ăn"  style={{width: 200}}/>
-            </div>
-            <div>
-                <Dropdown menu={{items}}>
-                    <a onClick={e => e.preventDefault()}>
-                        <Space className={"text-black"}>
-                            <UserOutlined />
-                            Tài khoản
-                        </Space>
-                    </a>
-                </Dropdown>
-            </div>
-            <div>
-                <ShoppingCartOutlined className={"text-2xl"} />
-            </div>
-        </div>
-    </Header>);
+    );
 };
 
 export default HeaderLayout;
