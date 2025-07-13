@@ -2,6 +2,7 @@ import React, {useState} from 'react';
 import {Col, Modal, Row} from 'antd';
 import "../assets/container.css"
 import "../assets/modal.css"
+import {WrapperTheme} from "./WrapperTheme.jsx";
 
 const Post = () => {
     const [isModalOpen, setIsModalOpen] = useState(false);
@@ -14,34 +15,33 @@ const Post = () => {
     const handleCancel = () => {
         setIsModalOpen(false);
     };
-
     return (
         <>
-            <div className={"container !mt-16"}>
-                <Row className={"flex justify-between"}>
-                    <Col span={10}>
-                        <p className={"text-4xl font-semibold le"}>Tiệc tại gia chất nhà hàng</p>
-                        <p className={"text-lg mt-7"}>
-                            Lorem ipsum dolor sit amet consectetur adipisicing elit.
-                            Eum quae fugit accusantium commodi esse modi pariatur praesentium,
-                            voluptas dolor ea qui? Vel dolore ipsam vitae voluptatem esse repellat nobis sint.
-                            Lorem ipsum dolor sit amet consectetur adipisicing elit.
-                            Eum quae fugit accusantium commodi esse modi pariatur praesentium,
-                            voluptas dolor ea qui? Vel dolore ipsam vitae voluptatem esse repellat nobis sint.
-                        </p>
-                        <p className={"text-lg mt-7"}>
-                            Lorem ipsum dolor sit amet consectetur adipisicing elit.
-                            Eum quae fugit accusantium commodi esse modi pariatur praesentium,
-                            voluptas dolor ea qui? Vel dolore ipsam vitae voluptatem esse repellat nobis sint.
-                        </p>
-                    </Col>
-                    <Col span={12} className={"relative"}>
-                        <img className={"w-5/6"}
-                             src="https://intern-project-chi.vercel.app/static/media/banner.3d2794dc83c9f6633434.jpg"
-                             alt=""/>
-                        <button type="button" data-bs-toggle="modal" className={"absolute top-40 left-60"} onClick={showModal} data-bs-target="#exampleModal">
-                            <div>
-                                <img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAEAAAABACAYAAACqaXHeAAAABmJLR0QA/wD/AP+gvaeTAAAGBElEQVR4nO2bfWhVZRzHv7/nvrXt7jpnpmIqFeRiRopuF9x
+           <WrapperTheme className={"container !mt-16"}>
+                   <Row className={"flex justify-between"}>
+                       <Col span={10}>
+                           <p className={"text-4xl font-semibold le"}>Tiệc tại gia chất nhà hàng</p>
+                           <p className={"text-lg mt-7"}>
+                               Lorem ipsum dolor sit amet consectetur adipisicing elit.
+                               Eum quae fugit accusantium commodi esse modi pariatur praesentium,
+                               voluptas dolor ea qui? Vel dolore ipsam vitae voluptatem esse repellat nobis sint.
+                               Lorem ipsum dolor sit amet consectetur adipisicing elit.
+                               Eum quae fugit accusantium commodi esse modi pariatur praesentium,
+                               voluptas dolor ea qui? Vel dolore ipsam vitae voluptatem esse repellat nobis sint.
+                           </p>
+                           <p className={"text-lg mt-7"}>
+                               Lorem ipsum dolor sit amet consectetur adipisicing elit.
+                               Eum quae fugit accusantium commodi esse modi pariatur praesentium,
+                               voluptas dolor ea qui? Vel dolore ipsam vitae voluptatem esse repellat nobis sint.
+                           </p>
+                       </Col>
+                       <Col span={12} className={"relative"}>
+                           <img className={"w-5/6"}
+                                src="https://intern-project-chi.vercel.app/static/media/banner.3d2794dc83c9f6633434.jpg"
+                                alt=""/>
+                           <button type="button" data-bs-toggle="modal" className={"absolute top-40 left-60"} onClick={showModal} data-bs-target="#exampleModal">
+                               <div>
+                                   <img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAEAAAABACAYAAACqaXHeAAAABmJLR0QA/wD/AP+gvaeTAAAGBElEQVR4nO2bfWhVZRzHv7/nvrXt7jpnpmIqFeRiRopuF9x
                                 obleqgRSTyCKyFhakWWBEIAwGhdALEZqkOJWSbAbNwD+k3L0zZ7Xrbb3AdBuipENs5XTu3qvdl3N+/eGCsHPuPS/PuSu8nz/P8/xenu+e89vzci5QpEiRIrcwVKhAiVBwFoS6iFUsJNACBlcQkx8AmD
                                 hBoHEGnyOBYahiwB+OjhYiL8cE4HaIZG8wRMwtDGoEcZVJF4ME6mGhdpXVxXqoHaoTeUoXIN68ZCbS3o0EbgVwpyS3Iwzey4q6LXC0/5IknwAkCjBeXz/d7U23gfAigDJZfm8iCdCOjJJ6a/rRn8dlO
                                 LQtAAOUDNWuBfAOgDvsp2SIUTC97o9E99l1ZEuAseZgwJfiXSA8YTcRKzDwpZLyPl9x/PgVqz4sCxBvrKkmQYcA3GXVhwwYOAsSq8q7+wat2AsrRtealtWSoKOY4sEDAAF3E9RvJxqX1Vm0N8dEU81y
@@ -56,28 +56,28 @@ const Post = () => {
                                 8HW/5q5PD9NHYqXd0T4CN4KhubmYIi4rzA+X9vRFzRpaOhMsC8diLEQDAWes2EvmtKqqywOR2HdWjC0fipZ39w1e+9OzBOBOqz7swsDBjJKuDfT8MGzVh5QDjxsfJNF7AGbL8GeAi2C85o+c+MyuIynH4v
                                 5w7NM0KVUA3iUgIcOnDnEQ3k55qUrG4AEHjrwmvyvaSIxWAPMluT1PjD1Zj2vbtK++vyzJJwCHfzKT6A02COaWyW8NNG9n9cwBnAIozELt8tfFev83P5nRI968ZCZSnvsFcC8Tz2dQ5d9XcDcuYvgyMZ1X
                                 iYbhTQ/oneEVKVKkSBGJ/AWu5CwNWQqZvAAAAABJRU5ErkJggg==" alt=""/>
-                            </div>
-                        </button>
-                    </Col>
-                </Row>
+                               </div>
+                           </button>
+                       </Col>
+                   </Row>
 
-                <Modal
-                    closable={{ 'aria-label': 'Custom Close Button' }}
-                    open={isModalOpen}
-                    onOk={handleOk}
-                    onCancel={handleCancel}
-                    width={1000}
-                    className={"!h-full"}
-                    footer={null}
-                >
-                    <iframe className={"w-full h-full"}
-                            src="https://www.youtube.com/embed/9_60Fl6g9xE"
-                            title="YouTube video player"
-                            // frameBorder="0"
-                            allowFullScreen>
-                    </iframe>
-                </Modal>
-            </div>
+                   <Modal
+                       closable={{ 'aria-label': 'Custom Close Button' }}
+                       open={isModalOpen}
+                       onOk={handleOk}
+                       onCancel={handleCancel}
+                       width={1000}
+                       className={"!h-full"}
+                       footer={null}
+                   >
+                       <iframe className={"w-full h-full"}
+                               src="https://www.youtube.com/embed/9_60Fl6g9xE"
+                               title="YouTube video player"
+                           // frameBorder="0"
+                               allowFullScreen>
+                       </iframe>
+                   </Modal>
+           </WrapperTheme>
         </>
     )
 }

@@ -4,6 +4,8 @@ import {Button, Input, Layout, Menu, Dropdown, Space} from 'antd';
 import {useLocation, useNavigate} from 'react-router-dom';
 import '../assets/header.css';
 import {UserOutlined, ShoppingCartOutlined} from '@ant-design/icons';
+import {WrapperTheme} from "./WrapperTheme.jsx";
+import {useTheme} from "../hook/UseTheme.jsx";
 
 const {Header} = Layout;
 const {Search} = Input;
@@ -52,19 +54,23 @@ const items = [
 const HeaderLayout = () => {
     const location = useLocation();
     const navigate = useNavigate();
+    const {theme} = useTheme()
 
     return (
-        <div className="h-18 z-50 fixed top-0 w-screen bg-white">
-            <Header className={"w-11/12 flex justify-between m-auto !bg-white"}>
+        <WrapperTheme className="h-18 z-50 fixed top-0 w-screen ">
+            <Header className={"w-11/12 flex justify-between m-auto !bg-transparent"}>
                 <div className={"header-left"}>
                     <Menu
                         selectedKeys={[location.pathname]}
                         onClick={({key}) => navigate(key)}
+                        className={"!bg-transparent"}
                         mode="horizontal"
                     >
                         {menuItems.map(item => (<Menu.Item
                             key={item.key}
-                            className={`${location.pathname === item.key && item.key !== PathVariable.ORDER ? "custom-menu-item-active" : ""} ${location.pathname === item.key && item.key === PathVariable.ORDER ? "custom-menu-btn-active" : ""}`}
+                            className={`${theme === "dark" ? "text-color-white" : ""}
+                                        ${location.pathname === item.key && item.key !== PathVariable.ORDER ? "custom-menu-item-active" : ""} 
+                                        ${location.pathname === item.key && item.key === PathVariable.ORDER ? "custom-menu-btn-active" : ""}`}
                         >
                             {item.key === PathVariable.ORDER ? (<Button type="primary" className="custom-button">
                                 {item.label}
@@ -77,9 +83,12 @@ const HeaderLayout = () => {
                         <Search placeholder="Tìm kiếm món ăn"  style={{width: 200}}/>
                     </div>
                     <div>
-                        <Dropdown menu={{items}}>
+                        <Dropdown
+                            menu={{items}}
+                            overlayClassName={`${theme === "dark" ? "text-color-white" : "text-black"} bg-black`}
+                        >
                             <a onClick={e => e.preventDefault()}>
-                                <Space className={"text-black"}>
+                                <Space className={`${theme === "dark" ? "text-color-white" : "text-black"}`}>
                                     <UserOutlined />
                                     Tài khoản
                                 </Space>
@@ -87,11 +96,11 @@ const HeaderLayout = () => {
                         </Dropdown>
                     </div>
                     <div>
-                        <ShoppingCartOutlined className={"text-2xl"} />
+                        <ShoppingCartOutlined className={`${theme === "dark" ? "text-color-white" : "text-black"} text-2xl"`}/>
                     </div>
                 </div>
             </Header>
-        </div>
+        </WrapperTheme>
     );
 };
 

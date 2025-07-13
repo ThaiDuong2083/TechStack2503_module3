@@ -1,6 +1,7 @@
 import { Col, Row } from 'antd';
 import {Link} from "react-router-dom";
 import PathVariable from "../enum.jsx";
+import {useTheme} from "../hook/UseTheme.jsx";
 
 const Service = ()=>{
     const backgroundStyle={
@@ -13,11 +14,12 @@ const Service = ()=>{
         filter: 'brightness(50%)',
         transition: '0.3s linear',
         backgroundImage: 'url(https://intern-project-chi.vercel.app/static/media/set_menu.50c5439a3c5c641f3ce0.jpg)',
-        }
+        };
+    const {theme} = useTheme();
 
     return (
         <>
-            <Row className={"bg-gray-100 gap-8 px-20 justify-center py-16"} style={{height:'750px'}}>
+            <Row className={`${theme==="dark" ? "" : "bg-gray-100"} gap-8 px-20 justify-center py-16`} style={{height:'750px'}}>
                 <Col span={7} className="text-center text-white h-1/2" style={{backgroundColor: "rgba(0, 0, 0, 0.83)"}}>
                     <div className="py-6">
                         <h2 className={"py-4 text-5xl"}>DỊCH VỤ</h2>

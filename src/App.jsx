@@ -9,6 +9,7 @@ import {ConfigProvider} from "antd";
 import PathVariable from "./enum.jsx";
 import SignUpForm from "./components/SignUpForm.jsx";
 import SignInForm from "./components/SignInForm.jsx";
+import {useTheme} from "./hook/UseTheme.jsx";
 
 function App() {
     const routes = useRoutes([
@@ -27,16 +28,23 @@ function App() {
         },
         { path: "*", element: <h1>404 Not Found</h1> },
     ])
+    const {theme, setTheme} = useTheme();
+
     return (
         <>
             <ConfigProvider
                 theme={{
                     token: {
-                        colorPrimary: '#d2691e', // Màu cam đất
+                        colorPrimary: '#d2691e',
                     },
                 }}
             >
-                {routes}
+                    {routes}
+                <div className={"fixed z-50 h-15 w-15 cursor-pointer bottom-4 border-2 right-4"}
+                     style={{borderRadius: "50%"}}
+                     onClick={() => {setTheme(theme === "light" ? "dark" : "light")}}>
+                    <img src="../public/dark-mode.png" alt="" />
+                </div>
             </ConfigProvider>
         </>
     )

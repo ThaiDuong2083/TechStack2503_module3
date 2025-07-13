@@ -1,74 +1,63 @@
 import {Button, Form, Input} from 'antd';
-import {useForm, Controller} from 'react-hook-form';
+import {useFormik} from "formik";
 
 const SignUpForm = () => {
-    const {
-        handleSubmit,
-        control,
-        watch,
-        formState: {errors}
-    } = useForm();
-
-    const onSubmit = (data) => {
-        console.log('Dữ liệu đăng ký:', data);
-    };
-    const password = watch("password");
+    const formik = useFormik({
+        initialValues: {
+            username: '',
+            password: '',
+            confirm_password: '',
+        },
+        onSubmit: values => {
+            console.log(values);
+        },
+    });
 
     return (
         <>
             <div className={"justify-center items-center flex h-96 gap-10"}>
                 <Form
-                    name="basic"
+                    component="form"
                     labelCol={{span: 8}}
                     wrapperCol={{span: 16}}
                     style={{width: "50%"}}
-                    initialValues={{remember: true}}
+                    initialValues={{remember: false}}
                     autoComplete="off"
+                    onFinish={formik.handleSubmit}
                     className={"bg-gray-200 !py-5 !pr-22"}
-                    onFinish={handleSubmit(onSubmit)}
                 >
-                    <h4 className={"text-4xl font-semibold mb-5 ml-80"}>Đăng kí</h4>
+                    <h4 className={"text-4xl font-semibold mb-5 ml-80"}>Đăng nhập</h4>
                     <Form.Item
                         label="Tên đăng nhập"
-                        validateStatus={errors.username ? 'error' : ''}
-                        help={errors.username?.message}
+                        name="username"
+                        rules={[{required: true, message: 'Vui lòng nhập tên đăng nhập!'}]}
                     >
-                        <Controller
-                            name="username"
-                            control={control}
-                            rules={{required: 'Vui lòng nhập tên đăng nhập!'}}
-                            render={({field}) => <Input {...field} />}
-                        />
+                        <Input value={formik.values.username} onChange={formik.handleChange}/>
                     </Form.Item>
 
                     <Form.Item
                         label="Mật khẩu"
-                        validateStatus={errors.password ? 'error' : ''}
-                        help={errors.password?.message}
+                        name="password"
+                        rules={[{required: true, message: 'Vui lòng nhập mật khẩu!'}]}
                     >
-                        <Controller
-                            name="password"
-                            control={control}
-                            rules={{required: 'Vui lòng nhập mật khẩu!'}}
-                            render={({field}) => <Input.Password {...field} />}
-                        />
+                        <Input.Password value={formik.values.password} onChange={formik.handleChange}/>
                     </Form.Item>
 
                     <Form.Item
-                        label="Nhập lại mật khẩu"
-                        validateStatus={errors.confirmPassword ? 'error' : ''}
-                        help={errors.confirmPassword?.message}
-                    >
-                        <Controller
-                            name="confirmPassword"
-                            control={control}
-                            rules={{
-                                required: 'Vui lòng nhập lại mật khẩu!',
-                                validate: value =>
-                                    value === password || 'Mật khẩu không khớp!'
-                            }}
-                            render={({field}) => <Input.Password {...field} />}
-                        />
+                        label="Mật khẩu"
+                        name="confirm_password"
+                        rules={[
+                            {required: true, message: 'Vui lòng nhập lại mật khẩu!'},
+                            {
+                                validator: (_, value) => {
+                                    if (!value || value === formik.values.password) {
+                                        return Promise.resolve();
+                                    }
+                                    return Promise.reject('Mật khẩu không khớp!');
+                                },
+                            },
+                    ]}>
+                        <Input.Password value={formik.values.confirm_password} onChange={formik.handleChange}/>
                     </Form.Item>
 
                     <Form.Item label={null}>

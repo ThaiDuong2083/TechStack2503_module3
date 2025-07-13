@@ -10,3 +10,7 @@
     font-weight: bold;
     padding: 20px 15px;
 }
+
+.text-color-white:not(.custom-menu-item-active){
+    color: white !important;
+}
