@@ -4,12 +4,17 @@ const PathVariable = Object.freeze({
     NEWS: '/news',
     ORDER: '/order',
     MENU: '/menu',
-    PROFILE: '/user-profile/profile',
-    SETTING_ADDRESS: '/user-profile/setting-address',
-    COUPON: '/user-profile/coupons',
     LOGOUT: '/logout',
     SIGN_IN: '/sign-in',
     SIGN_UP: '/sign-up',
+
+    USER_PROFILE: '/user-profile',
+    PROFILE: 'profile',
+    SETTING_ADDRESS: 'setting-address',
+    CART: 'cart',
+    COUPON: 'coupons',
 });
+
+export const Color = "#d2691e"
 
 export default PathVariable;

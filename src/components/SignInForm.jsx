@@ -1,16 +1,19 @@
 import {Button, Checkbox, Form, Input} from 'antd';
 import {useFormik} from "formik";
+import {Link} from "react-router-dom";
+import PathVariable from "../enum.jsx";
+import {useContext} from "react";
+import {AuthContext} from "../context/AuthContext.jsx";
 
 const SignInForm = () => {
+    const {login} = useContext(AuthContext);
     const formik = useFormik({
         initialValues: {
             username: '',
             password: '',
             remember: false
         },
-        onSubmit: values => {
-            console.log(values);
-        },
+        onSubmit: async (values) => await login(values.username, values.password),
     });
 
     return (
@@ -57,6 +60,9 @@ const SignInForm = () => {
                         <Button type="primary" htmlType="submit">
                             Đăng nhập
                         </Button>
+                    </Form.Item>
+                    <Form.Item label={null}>
+                        <span>Bạn chưa có tài khoản?</span> <Link to={PathVariable.SIGN_UP}>Đăng kí ngay</Link>
                     </Form.Item>
                 </Form>
             </div>

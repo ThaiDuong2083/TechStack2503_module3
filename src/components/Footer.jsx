@@ -2,22 +2,22 @@ import { Col, Row } from 'antd';
 import {YoutubeFilled, FacebookFilled} from  "@ant-design/icons"
 import image1 from '../assets/1.png';
 
-const Footer = ()=>{
+const Footer = ({className} )=>{
     const footerStyle = {
         backgroundImage: 'linear-gradient(180deg, rgba(0, 0, 0, .6), rgba(0, 0, 0, .6)), url(https://intern-project-chi.vercel.app/static/media/background-footer.3db8104f4c43054ea542.jpg)',
         backgroundPosition: '50%',
         height: '380px',
         backgroundRepeat: 'no-repeat',
         backgroundSize: 'cover',
-        borderBbottom: '1px solid #333',
+        borderBottom: '1px solid #333',
         clear: 'both',
-        marginTop: "5%"
+        marginTop: "5%",
     }
     return (
         <>
-            <footer style={footerStyle}>
-                <Row className={"text-white px-25 pt-7 border-b-1"} gutter={50}>
-                    <Col span={6}>
+            <footer style={footerStyle} className={className}>
+                <Row className={`text-white px-25 pt-7 border-b-1`} gutter={0}>
+                    <Col span={6} >
                         <h2 className={"text-xl font-semibold"}>Về chúng tôi</h2>
                         <p className={"leading-10"}>Số điện thoại: 095.366.4722</p>
                         <p>Địa chỉ: số 33 Nhân Chính, Trung Hòa, Cầu Giấy, Hà Nội</p>

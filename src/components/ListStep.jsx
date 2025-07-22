@@ -1,4 +1,4 @@
-import Step from "./step..jsx";
+import Step from "./Step.jsx";
 
 const listStep = () => {
     const steps = [

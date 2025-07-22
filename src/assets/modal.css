@@ -1,5 +1,6 @@
 .ant-modal-content{
     height: 500px !important;
+    padding: 0 !important;
 }
 .ant-modal-body{
     height: 100% !important;

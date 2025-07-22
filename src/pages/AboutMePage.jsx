@@ -1,6 +1,8 @@
+import {About} from "../components/About.jsx";
+
 const AboutMePage = ()=>{
     return(
-        <h1>About me</h1>
+        <About/>
     )
 }
 

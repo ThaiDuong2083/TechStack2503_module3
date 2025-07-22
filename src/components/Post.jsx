@@ -67,15 +67,11 @@ const Post = () => {
                        onOk={handleOk}
                        onCancel={handleCancel}
                        width={1000}
-                       className={"!h-full"}
                        footer={null}
                    >
-                       <iframe className={"w-full h-full"}
-                               src="https://www.youtube.com/embed/9_60Fl6g9xE"
-                               title="YouTube video player"
-                           // frameBorder="0"
-                               allowFullScreen>
-                       </iframe>
+                       <video width="full" height="full" controls >
+                           <source src="/public/post_video.mp4" type="video/mp4"/>
+                       </video>
                    </Modal>
            </WrapperTheme>
         </>

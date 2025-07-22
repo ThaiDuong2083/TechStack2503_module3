@@ -1,4 +1,6 @@
 import { Carousel, Button } from 'antd';
+import {Link} from "react-router-dom";
+import PathVariable from "../enum.jsx";
 
 const Banner = () =>{
     return(
@@ -19,7 +21,9 @@ const Banner = () =>{
                     <p className={"text-4xl font-bold my-5"}>ƯU ĐÃI LÊN TỚI 30%</p>
                     <p className={"text-4xl font-bold my-5"}>KHI ĐẶT SET MENU SUM VẦY</p>
                     <p className={"text-sm my-5"}>Áp dụng cho tiệc tại Hà Nội, từ 15/11 - 20/11/2021</p>
-                    <Button type={"primary"} className={"!h-14 text-sm font-bold !rounded-none"}>XEM CHI TIÉT ƯU ĐÃI</Button>
+                    <Button type={"primary"} className={"!h-14 text-sm font-bold !rounded-none"}>
+                        <Link to={PathVariable.ABOUT_ME}> XEM CHI TIÉT ƯU ĐÃI</Link>
+                    </Button>
                 </div>
             </div>
         </>

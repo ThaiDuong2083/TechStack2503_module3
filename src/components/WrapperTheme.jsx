@@ -5,7 +5,7 @@ export const WrapperTheme = ({children,  className = ""}) => {
     return <>
                 <div className={`${className}`}
                      style={{
-                         backgroundColor: `${theme === "dark" ? "#141414" : ""}`,
+                         backgroundColor: `${theme === "dark" ? "#141414" : "white"}`,
                          color: `${theme === "dark" ? "white" : "black"}`,
                      }}>
                     {children}
