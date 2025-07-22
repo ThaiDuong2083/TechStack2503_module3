@@ -31,7 +31,7 @@ export const Cart = () => {
                     totalPriceProduct: (item.discountPrice * item.quantity).toFixed(2),
                     action: item.id,
                 })
-                setSubTotal(prevState => prevState + item.price*item.quantity)
+                setSubTotal(prevState => prevState + item.price * item.quantity)
             })
 
             setItems(itemsArr);
@@ -47,14 +47,15 @@ export const Cart = () => {
         console.log(distanceQuantity)
         setItems(prevItems =>
             prevItems.map(item =>
-                item.id === id ? { ...item,
-                                    quantity: parseInt(newQuantity),
-                                    totalPriceProduct: (oldItem.discountPrice.discountPrice * newQuantity).toFixed(2),
-                                    } : item
+                item.id === id ? {
+                    ...item,
+                    quantity: parseInt(newQuantity),
+                    totalPriceProduct: (oldItem.discountPrice.discountPrice * newQuantity).toFixed(2),
+                } : item
             )
         );
 
-        setSubTotal(prevState => prevState + distanceQuantity*oldItem.discountPrice.price)
+        setSubTotal(prevState => prevState + distanceQuantity * oldItem.discountPrice.price)
         setCart(prevState => ({
             ...prevState,
             total: prevState.total + distanceQuantity * oldItem.discountPrice.discountPrice,
@@ -71,8 +72,8 @@ export const Cart = () => {
         updateQuantityItem(decodeToken().id, newItem).then();
     };
 
-    const handleDeleteItem = async (id) =>{
-        if (confirm("Bạn muốn xóa món ăn này?")){
+    const handleDeleteItem = async (id) => {
+        if (confirm("Bạn muốn xóa món ăn này?")) {
             const response = await deleteItemFromCart(id, decodeToken().id);
             if (response.code === 200) {
                 setIsModifiedItem(prevState => !prevState);
@@ -109,7 +110,7 @@ export const Cart = () => {
                            value={quantity}
                            min={1}
                            onChange={(e) =>
-                               handleQuantityChange(record.id, Number(e.target.value))} />
+                               handleQuantityChange(record.id, Number(e.target.value))}/>
             },
             {
                 title: 'Đơn giá',
@@ -139,32 +140,35 @@ export const Cart = () => {
     return (
         <WrapperTheme>
             {items.length === 0 ? (
-                <h1 className={"text-center w-full p-17 font-semibold text-4xl"}>Giỏ hàng của bạn đang trống</h1>
-            ) : ""}
-            <div className={"px-10"}>
-                <ConfigProvider
-                    theme={{
-                        algorithm: currentTheme === "dark" ? theme.darkAlgorithm : theme.defaultAlgorithm,
-                    }}
-                >
-                    <Table columns={columns} dataSource={items} pagination={false}/>
-                </ConfigProvider>
-            </div>
+                    <h1 className={"text-center w-full p-17 font-semibold text-4xl"}>Giỏ hàng của bạn đang trống</h1>
+                ) :
+                (<>
+                    <div className={"px-10"}>
+                        <ConfigProvider
+                            theme={{
+                                algorithm: currentTheme === "dark" ? theme.darkAlgorithm : theme.defaultAlgorithm,
+                            }}
+                        >
+                            <Table columns={columns} dataSource={items} pagination={false}/>
+                        </ConfigProvider>
+                    </div>
 
-            <div className={"px-40 text-lg flex justify-end leading-8"}>
-               <div className={"flex gap-5"}>
-                   <div className={"font-semibold"}>
-                       <p>Tổng tiền: </p>
-                       <p>Giảm giá: </p>
-                       <p>Tổng thanh toán: </p>
-                   </div>
-                   <div>
-                       <p>{subTotal.toFixed(2)}</p>
-                       <p>{(subTotal - cart.total).toFixed(2)}</p>
-                       <p>{cart.total !== undefined ? cart.total.toFixed(2) : 0}</p>
-                   </div>
-               </div>
-            </div>
+                    <div className={"px-40 text-lg flex justify-end leading-8"}>
+                        <div className={"flex gap-5"}>
+                            <div className={"font-semibold"}>
+                                <p>Tổng tiền: </p>
+                                <p>Giảm giá: </p>
+                                <p>Tổng thanh toán: </p>
+                            </div>
+                            <div>
+                                <p>{subTotal.toFixed(2)}</p>
+                                <p>{(subTotal - cart.total).toFixed(2)}</p>
+                                <p>{cart.total.toFixed(2)}</p>
+                            </div>
+                        </div>
+                    </div>
+                </>)
+            }
         </WrapperTheme>
     )
 }
