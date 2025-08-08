@@ -9,14 +9,13 @@ import {ConfigProvider} from "antd";
 import PathVariable, {Color} from "./enum.jsx";
 import SignUpForm from "./components/SignUpForm.jsx";
 import SignInForm from "./components/SignInForm.jsx";
-import {useTheme} from "./hook/UseTheme.jsx";
 import {useAuth} from "./hook/UseAuth.jsx";
 import {ProfileLayout} from "./layout/ProfileLayout.jsx";
 import {Profile} from "./components/Profile.jsx";
 import {Cart} from "./components/Cart.jsx";
+import { DetailFood } from "./components/DetailFood.jsx";
 
 function App() {
-    const {theme, setTheme} = useTheme();
     const {token} = useAuth();
 
     const PrivateRoute = ({ children }) => {
@@ -29,12 +28,11 @@ function App() {
             element: <MainLayout/>,
             children: [
                 {path: PathVariable.HOME_PAGE, element: <HomePage/>},
-                {path: PathVariable.MENU, element: <MenuPage/>},
+                {path: PathVariable.MENU,element: <MenuPage />},
+                {path: PathVariable.MENU+"/:id", element: <DetailFood/>},
                 {path: PathVariable.ABOUT_ME, element: <AboutMePage/>},
                 {path: PathVariable.NEWS, element: <NewsPage/>},
                 {path: PathVariable.ORDER, element: <PrivateRoute><OrderPage/></PrivateRoute>},
-                {path: PathVariable.SIGN_UP, element: <SignUpForm/>},
-                {path: PathVariable.SIGN_IN, element: <SignInForm/>},
                 {path: PathVariable.CART, element: <PrivateRoute><Cart/></PrivateRoute>},
             ],
         },
@@ -46,6 +44,8 @@ function App() {
                 {path: PathVariable.SETTING_ADDRESS, element: <Profile/>},
             ]
         },
+        {path: PathVariable.SIGN_UP, element: <SignUpForm/>},
+        {path: PathVariable.SIGN_IN, element: <SignInForm/>},
         {path: "*", element: <h1>404 Not Found</h1>},
     ])
     return (
@@ -58,13 +58,6 @@ function App() {
                 }}
             >
                 {routes}
-                <div className={"fixed z-50 h-15 w-15 cursor-pointer bottom-4 border-2 right-4"}
-                     style={{borderRadius: "50%"}}
-                     onClick={() => {
-                         setTheme(theme === "light" ? "dark" : "light")
-                     }}>
-                    <img src="../public/dark-mode.png" alt=""/>
-                </div>
             </ConfigProvider>
         </>
     )

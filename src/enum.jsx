@@ -7,6 +7,7 @@ const PathVariable = Object.freeze({
     LOGOUT: '/logout',
     SIGN_IN: '/sign-in',
     SIGN_UP: '/sign-up',
+    FOOD_DETAIL: '/food/detail',
 
     USER_PROFILE: '/user-profile',
     PROFILE: 'profile',

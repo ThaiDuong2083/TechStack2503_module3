@@ -1,6 +1,6 @@
-import React from 'react';
+import { useEffect, useState } from 'react';
 import PathVariable from '../enum.jsx';
-import {Button, Input, Layout, Menu, Dropdown, Space} from 'antd';
+import {Button, Input, Layout, Menu, Dropdown, Space, Switch} from 'antd';
 import {Link, useLocation, useNavigate} from 'react-router-dom';
 import '../assets/header.css';
 import {UserOutlined, ShoppingCartOutlined} from '@ant-design/icons';
@@ -9,15 +9,17 @@ import {useTheme} from "../hook/UseTheme.jsx";
 import {UseUser} from "../hook/UseUser.jsx";
 import {useAuth} from "../hook/UseAuth.jsx";
 import {useCart} from "../hook/UseCart.jsx";
+import { ConfigTheme } from '../theme/ConfigTheme.jsx';
+import { SearchWithSuggestions } from './SearchWithSuggestions.jsx';
 
 const {Header} = Layout;
-const {Search} = Input;
 
 const HeaderLayout = () => {
     const location = useLocation();
     const navigate = useNavigate();
-    const {theme} = useTheme()
-    const {userData} = UseUser();
+    const {theme, setTheme} = useTheme()
+    const [isDark, setIsDark] = useState(false);
+    const { userData } = UseUser();
     const {logout} = useAuth();
 
     const menuItems = [
@@ -26,6 +28,13 @@ const HeaderLayout = () => {
         {key: PathVariable.ABOUT_ME, label: 'Về chúng tôi'},
         {key: PathVariable.NEWS, label: 'Tin tức'},
         {key: PathVariable.ORDER, label: 'Đặt tiệc ngay'},];
+
+
+    useEffect(() => {
+        if (theme) {
+            setIsDark(theme !== "light");
+        }
+    }, [theme]);    
 
     const items = [
         {
@@ -82,6 +91,10 @@ const HeaderLayout = () => {
 
     const {countItem} = useCart();
 
+    const handleSwitchChange = (checked) => {
+        setTheme(checked ? "dark" : "light")
+    };
+
     return (
         <WrapperTheme className="h-18 z-50 fixed top-0 w-screen ">
             <Header
@@ -106,10 +119,12 @@ const HeaderLayout = () => {
                     </Menu>
                 </div>
                 <div className={"header-right flex items-center gap-5"}>
-                    {userData.email !== undefined ?
+                    {userData !== null ?
                         (<>
-                            <div className={"flex items-center"}>
-                                <Search placeholder="Tìm kiếm món ăn" style={{width: 200}}/>
+                            <div className={"flex items-center relative"}>
+                                <ConfigTheme>
+                                    <SearchWithSuggestions/>
+                                </ConfigTheme>
                             </div>
                             <div>
                                 <Dropdown
@@ -150,6 +165,14 @@ const HeaderLayout = () => {
                             </>
                         )
                     }
+                        <div>
+                            <Switch
+                                checked={isDark} 
+                                onChange={handleSwitchChange}
+                                checkedChildren="☀️"
+                                unCheckedChildren="🌙"
+                            />
+                        </div>
                 </div>
             </Header>
         </WrapperTheme>

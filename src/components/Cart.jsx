@@ -1,8 +1,8 @@
 import {WrapperTheme} from "./WrapperTheme.jsx";
 import {useEffect, useState} from "react";
 import {Button, ConfigProvider, Space, Table, theme} from "antd";
-import {deleteItemFromCart, getCartByUser, updateQuantityItem} from "../route/Route.js";
-import {decodeToken} from "../service/DecodeToken.jsx";
+import {deleteItemFromCart, getCartByUser, updateQuantityItem} from "../service/cartService.js";
+import {decodeToken} from "../service/functionService.js";
 import {useTheme} from "../hook/UseTheme.jsx";
 import {useCart} from "../hook/UseCart.jsx";
 

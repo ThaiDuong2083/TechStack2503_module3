@@ -1,11 +1,14 @@
 import React, {useEffect, useRef, useState} from "react";
-import {addItemToCart, getPageProduct} from "../route/Route.js";
-import {Card, ConfigProvider, Input, Pagination, theme} from "antd";
-import {ShoppingCartOutlined, StarFilled} from "@ant-design/icons";
+import { getPageProduct } from "../service/productService.js";
+import { addItemToCart } from "../service/cartService.js"
+import {Card, ConfigProvider, Input, Pagination} from "antd";
+import {FileTextOutlined, ShoppingCartOutlined, StarFilled} from "@ant-design/icons";
 import PathVariable from "../enum.jsx";
-import {calculateDiscountPrice, decodeToken} from "../service/DecodeToken.jsx";
+import {calculateDiscountPrice, decodeToken} from "../service/functionService.js";
 import {useCart} from "../hook/UseCart.jsx";
 import {toast, ToastContainer} from "react-toastify";
+import { ConfigTheme } from '../theme/ConfigTheme.jsx';
+import { Link, Outlet } from "react-router-dom";
 
 export const ListMenu = ({currentTheme})=>{
     const [limit, setLimit] = useState(8)
@@ -58,51 +61,48 @@ export const ListMenu = ({currentTheme})=>{
     return (
         <>
             <ToastContainer />
-            <ConfigProvider
-                theme={{
-                    algorithm: currentTheme === "dark" ? theme.darkAlgorithm : theme.defaultAlgorithm,
-                }}
-            >
+            <ConfigTheme>
                 <Input.Search variant="filled" value={name} placeholder="Tìm kiếm theo tên"
                               onChange={(e) => setName(e.target.value)}/>
-            </ConfigProvider>
+            </ConfigTheme>
             <div className={"my-10 flex gap-10 flex-wrap"}>
                 {products.map(product => (
-                    <Card
-                        hoverable
-                        key={product.id}
-                        cover={<img alt={product.name} src={product.thumbnail}/>}
-                        className={"w-75"}
-                    >
-                        <h1 className={"font-bold text-lg"}>{product.title}</h1>
-                        <div className={"text-base flex gap-10"}>
-                           <span className={"font-semibold"}>
-                               ${(calculateDiscountPrice(product.price, product.discountPercentage))}
-                           </span>
-                            <span className={"line-through"}> ${product.price} </span>
-                        </div>
-                        <div className={"text-base flex justify-between"}>
-                            <span>Số lượng: {product.stock}</span>
-                            <span>{product.rating} <StarFilled className={"!text-yellow-300"}/></span>
-                        </div>
-                        <span
-                            onClick={() => {
-                                handleAddtoCart({
-                                    productId: product.id,
-                                    price: product.price,
-                                    discountPrice: (calculateDiscountPrice(product.price, product.discountPercentage))
-                                })}
-                            }
-                            className={"text-base"}><ShoppingCartOutlined /> Thêm vào giỏ hàng</span>
-                    </Card>
+                    <ConfigTheme>
+                        <Card
+                            hoverable
+                            key={product.id}
+                            cover={<img alt={product.name} src={product.thumbnail}/>}
+                            className={"w-75"}
+                        >
+                            <h1 className={"font-bold text-lg"}>{product.title}</h1>
+                            <div className={"text-base flex gap-10"}>
+                            <span className={"font-semibold"}>
+                                ${(calculateDiscountPrice(product.price, product.discountPercentage))}
+                            </span>
+                                <span className={"line-through"}> ${product.price} </span>
+                            </div>
+                            <div className={"text-base flex justify-between"}>
+                                <span>Số lượng: {product.stock}</span>
+                                <span>{product.rating} <StarFilled className={"!text-yellow-300"}/></span>
+                            </div>
+                            <span
+                                onClick={() => {
+                                    handleAddtoCart({
+                                        productId: product.id,
+                                        price: product.price,
+                                        discountPrice: (calculateDiscountPrice(product.price, product.discountPercentage))
+                                    })}
+                                }
+                                className={"block text-base"}><ShoppingCartOutlined /> Thêm vào giỏ hàng</span>
+                            
+                            <Link to={PathVariable.MENU+"/"+product.id} className={`${currentTheme === "dark" ? "!text-white" : "!text-black"} text-base`}>
+                                <FileTextOutlined /> Chi tiết</Link>
+                                
+                        </Card>
+                    </ConfigTheme>
                 ))}
             </div>
-
-            <ConfigProvider
-                theme={{
-                    algorithm: currentTheme === "dark" ? theme.darkAlgorithm : theme.defaultAlgorithm,
-                }}
-            >
+            <ConfigTheme>
                 <Pagination
                     align="center"
                     current={currentPage}
@@ -113,7 +113,7 @@ export const ListMenu = ({currentTheme})=>{
                         setLimit(pageSize)
                     }}
                 />
-            </ConfigProvider>
+            </ConfigTheme>
         </>
     )
 }

@@ -1,5 +1,5 @@
-import {createContext, useEffect, useState} from "react";
-import {getUserData} from "../route/Route.js";
+import { createContext, useEffect, useState } from "react";
+import { getUserData } from "../service/authService";
 
 export const UserContext = createContext();
 
@@ -15,23 +15,21 @@ export const UserProvider = ({ children }) => {
     })
     useEffect(() => {
         const fetchData = async () => {
-            try {
-                const result = await getUserData();
-                setUserData({
-                    email: result.email,
-                    firstName: result.firstName,
-                    lastName: result.lastName,
-                    gender: result.gender,
-                    image: result.image,
-                    phone: result.phone,
-                    birthDate: result.birthDate,
-                });
-            } catch (error) {
-                console.error( error);
-            }
+            const result = await getUserData();
+            result === null ?
+            setUserData(null) :
+            setUserData({
+                email: result.email,
+                firstName: result.firstName,
+                lastName: result.lastName,
+                gender: result.gender,
+                image: result.image,
+                phone: result.phone,
+                birthDate: result.birthDate,
+            });
         };
         fetchData().then();
     }, []);
 
-    return <UserContext.Provider value={{userData, setUserData}}>{children}</UserContext.Provider>;
+    return <UserContext.Provider value={{ userData, setUserData }}>{children}</UserContext.Provider>;
 }

@@ -3,6 +3,7 @@ import {Col, Modal, Row} from 'antd';
 import "../assets/container.css"
 import "../assets/modal.css"
 import {WrapperTheme} from "./WrapperTheme.jsx";
+import videoDemo from "../assets/post_video.mp4"
 
 const Post = () => {
     const [isModalOpen, setIsModalOpen] = useState(false);
@@ -70,7 +71,7 @@ const Post = () => {
                        footer={null}
                    >
                        <video width="full" height="full" controls >
-                           <source src="/public/post_video.mp4" type="video/mp4"/>
+                           <source src={videoDemo} type="video/mp4"/>
                        </video>
                    </Modal>
            </WrapperTheme>

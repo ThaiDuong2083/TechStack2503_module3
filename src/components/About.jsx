@@ -1,6 +1,6 @@
 import {WrapperTheme} from "./WrapperTheme.jsx";
 import {Button, Col, Row} from "antd";
-import React from "react";
+import videoDemo from "../assets/post_video.mp4"
 
 export const About = () => {
     return (
@@ -13,7 +13,7 @@ export const About = () => {
                 </Col>
                 <Col span={17} className={"p-6"}>
                     <video width="full" height="900" controls>
-                        <source src="/public/post_video.mp4" type="video/mp4"/>
+                        <source src={videoDemo} type="video/mp4"/>
                     </video>
                     <Row>
                         <Col span={12}>
