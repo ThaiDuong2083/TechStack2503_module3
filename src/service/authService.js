@@ -1,4 +1,4 @@
-import axios from "../api/axiosInstance";
+import axios from "axios";
 
 
 const BASE_URL = "https://dummyjson.com";
@@ -16,10 +16,15 @@ export const login = async (username, password) => {
 
 export const getUserData = async () => {
   try {
-    const res = await axios.get(`${BASE_URL}/auth/me`);
+    const res = await axios.get(`${BASE_URL}/auth/me`, {
+      headers: {
+        Authorization: `Bearer ${localStorage.getItem('accessToken') }`,
+      },
+    });
 
     return res.data;
-  } catch {
-    return null
+  } catch (error) {
+    console.error('Error getting user data:', error);
+    return null;
   }
 };
