@@ -18,7 +18,7 @@ export const getUserData = async () => {
   try {
     const res = await axios.get(`${BASE_URL}/auth/me`, {
       headers: {
-        Authorization: `Bearer ${localStorage.getItem('accessToken') }`,
+        Authorization: `Bearer ${localStorage.getItem('token') }`,
       },
     });
 
