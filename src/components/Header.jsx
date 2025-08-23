@@ -63,11 +63,19 @@ const HeaderLayout = () => {
         },
         {
             label: (
+                <a rel="noopener noreferrer" href={PathVariable.TRANSFER_MENU}>
+                    Menu của tôi
+                </a>
+            ),
+            key: '3',
+        },
+        {
+            label: (
                 <a rel="noopener noreferrer" onClick={()=>logout()}>
                     Đăng xuất
                 </a>
             ),
-            key: '3',
+            key: '4',
         },];
 
     const itemsSign = [
@@ -98,7 +106,7 @@ const HeaderLayout = () => {
     return (
         <WrapperTheme className="h-18 z-50 fixed top-0 w-screen ">
             <Header
-                className={`w-11/12 flex justify-between m-auto ${theme === "dark" ? "!bg-transparent" : "!bg-white"}`}>
+                className={`w-screen flex justify-between m-auto ${theme === "dark" ? "!bg-transparent" : "!bg-white"}`}>
                 <div className={"header-left"}>
                     <Menu
                         selectedKeys={[location.pathname]}

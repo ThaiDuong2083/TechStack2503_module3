@@ -1,25 +1,25 @@
-import React, {useEffect, useRef, useState} from "react";
+import React, { useEffect, useRef, useState } from "react";
 import { getPageProduct } from "../service/productService.js";
 import { addItemToCart } from "../service/cartService.js"
-import {Card, ConfigProvider, Input, Pagination} from "antd";
-import {FileTextOutlined, ShoppingCartOutlined, StarFilled} from "@ant-design/icons";
+import { Card, Input, Pagination } from "antd";
+import { FileTextOutlined, ShoppingCartOutlined, StarFilled } from "@ant-design/icons";
 import PathVariable from "../enum.jsx";
-import {calculateDiscountPrice, decodeToken} from "../service/functionService.js";
-import {useCart} from "../hook/UseCart.jsx";
-import {toast, ToastContainer} from "react-toastify";
+import { calculateDiscountPrice, decodeToken } from "../service/functionService.js";
+import { useCart } from "../hook/UseCart.jsx";
+import { toast, ToastContainer } from "react-toastify";
 import { ConfigTheme } from '../theme/ConfigTheme.jsx';
-import { Link, Outlet } from "react-router-dom";
+import { Link } from "react-router-dom";
 
-export const ListMenu = ({currentTheme})=>{
+export const ListMenu = ({ currentTheme }) => {
     const [limit, setLimit] = useState(8)
     const skip = useRef(0)
     const [currentPage, setCurrentPage] = useState(1)
     const total = useRef(0)
     const [products, setProducts] = useState([])
     const [name, setName] = useState("")
-    const {fetchCountCart} = useCart()
+    const { fetchCountCart } = useCart()
 
-    const notify = (msg) => toast.success(msg,{
+    const notify = (msg) => toast.success(msg, {
         theme: currentTheme,
     });
 
@@ -39,7 +39,7 @@ export const ListMenu = ({currentTheme})=>{
         fetchProduct(limit, skip);
     }, [limit, currentPage, name])
 
-    const handleAddtoCart = async ({productId, price, discountPrice}) => {
+    const handleAddtoCart = async ({ productId, price, discountPrice }) => {
         const user = decodeToken();
         if (user === null) {
             location.href = PathVariable.SIGN_IN
@@ -53,7 +53,7 @@ export const ListMenu = ({currentTheme})=>{
                 id: productId
             }
         }
-        const response = await addItemToCart(item, user.id)
+        const response = await addItemToCart(user.id, item)
         notify(response.msg)
         fetchCountCart()
     }
@@ -63,7 +63,7 @@ export const ListMenu = ({currentTheme})=>{
             <ToastContainer />
             <ConfigTheme>
                 <Input.Search variant="filled" value={name} placeholder="Tìm kiếm theo tên"
-                              onChange={(e) => setName(e.target.value)}/>
+                    onChange={(e) => setName(e.target.value)} />
             </ConfigTheme>
             <div className={"my-10 flex gap-10 flex-wrap"}>
                 {products.map(product => (
@@ -71,19 +71,19 @@ export const ListMenu = ({currentTheme})=>{
                         <Card
                             hoverable
                             key={product.id}
-                            cover={<img alt={product.name} src={product.thumbnail}/>}
+                            cover={<img alt={product.name} src={product.thumbnail} />}
                             className={"w-75"}
                         >
                             <h1 className={"font-bold text-lg"}>{product.title}</h1>
                             <div className={"text-base flex gap-10"}>
-                            <span className={"font-semibold"}>
-                                ${(calculateDiscountPrice(product.price, product.discountPercentage))}
-                            </span>
+                                <span className={"font-semibold"}>
+                                    ${(calculateDiscountPrice(product.price, product.discountPercentage))}
+                                </span>
                                 <span className={"line-through"}> ${product.price} </span>
                             </div>
                             <div className={"text-base flex justify-between"}>
                                 <span>Số lượng: {product.stock}</span>
-                                <span>{product.rating} <StarFilled className={"!text-yellow-300"}/></span>
+                                <span>{product.rating} <StarFilled className={"!text-yellow-300"} /></span>
                             </div>
                             <span
                                 onClick={() => {
@@ -91,13 +91,14 @@ export const ListMenu = ({currentTheme})=>{
                                         productId: product.id,
                                         price: product.price,
                                         discountPrice: (calculateDiscountPrice(product.price, product.discountPercentage))
-                                    })}
+                                    })
+                                }
                                 }
                                 className={"block text-base"}><ShoppingCartOutlined /> Thêm vào giỏ hàng</span>
-                            
-                            <Link to={PathVariable.MENU+"/"+product.id} className={`${currentTheme === "dark" ? "!text-white" : "!text-black"} text-base`}>
+
+                            <Link to={PathVariable.MENU + "/" + product.id} className={`${currentTheme === "dark" ? "!text-white" : "!text-black"} text-base`}>
                                 <FileTextOutlined /> Chi tiết</Link>
-                                
+
                         </Card>
                     </ConfigTheme>
                 ))}

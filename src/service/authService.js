@@ -1,4 +1,5 @@
 import axios from "axios";
+import { axiosInstance } from "../api/axiosInstance";
 
 
 const BASE_URL = "https://dummyjson.com";
@@ -9,18 +10,12 @@ export const login = async (username, password) => {
     password,
     expiresInMins: 30
   },);
-  localStorage.setItem("token", res.data.accessToken);
-  localStorage.setItem("refreshToken", res.data.refreshToken)
   return res.data;
 };
 
 export const getUserData = async () => {
   try {
-    const res = await axios.get(`${BASE_URL}/auth/me`, {
-      headers: {
-        Authorization: `Bearer ${localStorage.getItem('token') }`,
-      },
-    });
+    const res = await axiosInstance.get(`${BASE_URL}/auth/me`);
 
     return res.data;
   } catch (error) {

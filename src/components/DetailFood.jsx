@@ -4,16 +4,27 @@ import { Row, Col, Carousel, Button, Tabs, Rate } from "antd";
 import { useEffect, useState } from "react";
 import { getDetailProduct as getDetailProductApi } from "../service/productService";
 import { useTheme } from "../hook/UseTheme";
+import { addItemToCart } from "../service/cartService.js"
 import { ConfigTheme } from "../theme/ConfigTheme"
 import dayjs from "dayjs";
-export const DetailFood = () => {
+import { calculateDiscountPrice, decodeToken } from "../service/functionService";
+import PathVariable from "../enum";
+import { toast, ToastContainer } from "react-toastify";
+import { useCart } from "../hook/UseCart.jsx";
+
+export const DetailFood = ({ currentTheme }) => {
     const { theme } = useTheme()
     const { id } = useParams();
     const [detailProduct, setDetailProduct] = useState(null);
+    const { fetchCountCart } = useCart()
     const [descriptionAndRate, setDescriptionAndRate] = useState({
         description: "",
         reviews: []
     })
+    const notify = (msg) => toast.success(msg, {
+        theme: currentTheme,
+    });
+
     const getDetailProduct = async (id) => {
         try {
             const res = await getDetailProductApi(id);
@@ -62,8 +73,28 @@ export const DetailFood = () => {
             ),
         },
     ];
+
+    const handleAddtoCart = async ({ productId, price, discountPrice }) => {
+        const user = decodeToken();
+        if (user === null) {
+            location.href = PathVariable.SIGN_IN
+        }
+        let item = {
+            id: null,
+            quantity: 1,
+            price: price,
+            discountPrice: discountPrice,
+            product: {
+                id: productId
+            }
+        }
+        const response = await addItemToCart(user.id, item)
+        notify(response.msg)
+        fetchCountCart()
+    }
     return (
         <WrapperTheme className="mx-20">
+            <ToastContainer />
             {detailProduct ? (
                 <>
                     <Row gutter={[50, 24]} className="py-6">
@@ -105,13 +136,19 @@ export const DetailFood = () => {
                                 </p>
 
                                 <p className={`text-xl font-semibold text-red-500`}>
-                                    ${(detailProduct.price - detailProduct.price * detailProduct.discountPercentage/100).toFixed(2)}{' '}
+                                    ${(detailProduct.price - detailProduct.price * detailProduct.discountPercentage / 100).toFixed(2)}{' '}
                                     <span className={`text-gray-400 line-through text-lg ml-2`}>
                                         ${detailProduct.price}
                                     </span>
                                 </p>
 
-                                <Button type="primary" size="large" className="w-40">
+                                <Button type="primary" onClick={() => {
+                                    handleAddtoCart({
+                                        productId: detailProduct.id,
+                                        price: detailProduct.price,
+                                        discountPrice: (calculateDiscountPrice(detailProduct.price, detailProduct.discountPercentage))
+                                    })
+                                }} size="large" className="w-40">
                                     Thêm vào giỏ hàng
                                 </Button>
                             </div>

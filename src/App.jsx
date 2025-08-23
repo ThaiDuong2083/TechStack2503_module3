@@ -14,6 +14,7 @@ import {ProfileLayout} from "./layout/ProfileLayout.jsx";
 import {Profile} from "./components/Profile.jsx";
 import {Cart} from "./components/Cart.jsx";
 import { DetailFood } from "./components/DetailFood.jsx";
+import { TransferMenuPage } from "./pages/TransferManuPage.jsx";
 
 function App() {
     const {token} = useAuth();
@@ -33,7 +34,8 @@ function App() {
                 {path: PathVariable.ABOUT_ME, element: <AboutMePage/>},
                 {path: PathVariable.NEWS, element: <NewsPage/>},
                 {path: PathVariable.ORDER, element: <PrivateRoute><OrderPage/></PrivateRoute>},
-                {path: PathVariable.CART, element: <PrivateRoute><Cart/></PrivateRoute>},
+                {path: PathVariable.CART, element: <PrivateRoute><Cart /></PrivateRoute> },
+                {path: PathVariable.TRANSFER_MENU, element: <PrivateRoute><TransferMenuPage/></PrivateRoute>}
             ],
         },
         {

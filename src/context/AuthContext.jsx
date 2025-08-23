@@ -9,7 +9,12 @@ export const AuthProvider = ({ children }) => {
 
     const login = async (username, password) => {
         const res = await apiLogin(username, password);
-        res ? window.location.href = "/" : ""
+        if (res) {
+            localStorage.setItem("token", res.accessToken);
+            localStorage.setItem("refreshToken", res.refreshToken)
+            setToken(res.accessToken)
+            window.location.href = "/"
+        }
     }
 
     const logout = () => {

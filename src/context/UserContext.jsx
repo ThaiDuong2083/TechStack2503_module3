@@ -16,7 +16,6 @@ export const UserProvider = ({ children }) => {
     useEffect(() => {
         const fetchData = async () => {
             const result = await getUserData();
-            console.log(result)
             result === null ?
             setUserData(null) :
             setUserData({
