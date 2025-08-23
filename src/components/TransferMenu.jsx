@@ -4,12 +4,15 @@ import { ConfigTheme } from "../theme/ConfigTheme"
 import { getPageProduct } from '../service/productService';
 import { getDetailMenuService, getAllNameAndIdMenuService, createOrUpdateMenu } from '../service/menuService';
 import { decodeToken, formatDate } from '../service/functionService';
+import { toast, ToastContainer } from 'react-toastify';
+import { useTheme } from '../hook/UseTheme';
 
 export function TransferMenu() {
     const [targetKeys, setTargetKeys] = useState([]);
     const [products, setProducts] = useState([])
     const [idAndNameMenus, setIdAndNameMenus] = useState([])
     const [check, setCheck] = useState(false)
+    const { theme } = useTheme()
     const [menu, setMenu] = useState({
         name: "Menu mới",
         items: {},
@@ -18,7 +21,9 @@ export function TransferMenu() {
         userId: decodeToken().id,
         createdAt: formatDate()
     })
-
+    const notify = (msg) => toast.success(msg, {
+        theme: theme,
+    });
     async function getAllProduct() {
         const res = await getPageProduct()
         let foods = []
@@ -105,15 +110,18 @@ export function TransferMenu() {
     }
     const handleCreateOrUpdate = async () => {
         const res = await createOrUpdateMenu(menu)
+        console.log(res);
         if (res.code === 200) {
             setMenu(res.data)
             setCheck(prev => !prev)
+            notify(res.msg)
         }
     }
 
     return (
         <>
             <ConfigTheme>
+                <ToastContainer/>
                 <Select
                     showSearch
                     style={{ width: '100%', marginBottom: "1%" }}

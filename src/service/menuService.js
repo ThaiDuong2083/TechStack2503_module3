@@ -1,11 +1,12 @@
 import { getUserData } from "./authService"
 
-const MENU_URL = "http://localhost:8080/api/v1/list-menu"
+// const MENU_URL = "http://localhost:8080/api/v1/list-menu"
+const MENU_URL = "https://be-techstack2503-module3.onrender.com/api/v1/list-menu"
 
 export const getAllMenuService = async (userId) => {
     getUserData()
     let param = new URLSearchParams({ userId: userId })
-    return await fetch(MENU_URL+"/get-all" + '?' + param)
+    return await fetch(MENU_URL + "/get-all" + '?' + param)
         .then(res => res.json())
 }
 
@@ -27,7 +28,7 @@ export const getDetailMenuService = async (id) => {
 export const createOrUpdateMenu = async (menu) => {
     getUserData()
     return await fetch(MENU_URL, {
-        method: menu.id ===  undefined ? "POST" : "PUT" ,
+        method: menu.id === undefined ? "POST" : "PUT",
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify(menu)
     })

@@ -1,6 +1,7 @@
 import { getUserData } from './authService';
 
-const CART_URL = "http://localhost:8080/api/v1/cart"
+const CART_URL = "https://be-techstack2503-module3.onrender.com/api/v1/cart"
+// const CART_URL = "http://localhost:8080/api/v1/cart"
 
 export const getCartByUser = async (userId) => {
     getUserData()
